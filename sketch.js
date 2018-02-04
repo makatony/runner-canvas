@@ -2,13 +2,15 @@ let paths = [];
 currPath = 0;
 paths[currPath] = [];
 runners = [];
-const PATHCOLOR = [255, 255, 255, 255];
+runnersCount = 0;
 
 
 function setup() {
   createCanvas(640, 480);
   BGCOLOR = color(120);
-  fr = createP("framerate");
+  PATHCOLOR = color(255);
+  fr = createP('framerate');
+  createP('Instructions for visualization: Drag mouse to create a white path. Doubleclick to create a runner at mouse position. Red lines are the runner\'s sight. If runner is close to a wall, the red line goes only until a wall. I call this the "wall distance".\n<br>This is just a canvas for a runner application. The movement of the runner should eventually be based on a neural network rather than random-ish');
 
   mouseListeners.push({
     type: 'mouseDragged',
@@ -34,7 +36,8 @@ function setup() {
     type: 'mousePressed',
     fn: function () {
       if (this.isDoubleClick) {
-        runners.push(new Runner(mouseX, mouseY));
+        runners.push(new Runner(runnersCount, mouseX, mouseY));
+        runnersCount++;
       }
     }
   });
